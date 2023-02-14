@@ -1,0 +1,44 @@
+{
+  "name": "cariilmu-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "transpile": "babel ./src --out-dir dist -s",
+    "build": "npm run clean && npm run transpile",
+    "clean": "rimraf dist",
+    "test": "mocha --require @babel/register src/tests/*.test.js --exit",
+    "dev": "nodemon --exec babel-node src/app.js",
+    "start": "node dist/app.js",
+    "generate": "node -p \"require('crypto').randomBytes(32).toString('hex')\""
+  },
+  "keywords": [],
+  "author": "Athhar Kautsar",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.1.0",
+    "body-parser": "^1.20.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "express-validator": "^6.14.2",
+    "helmet": "^6.0.0",
+    "jsonwebtoken": "^9.0.0",
+    "momen": "^0.0.1-security",
+    "moment": "^2.29.4",
+    "mysql2": "^2.3.3",
+    "rimraf": "^3.0.2",
+    "sequelize": "^6.25.5",
+    "winston": "^3.8.2"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.19.3",
+    "@babel/core": "^7.20.2",
+    "@babel/node": "^7.20.2",
+    "@babel/plugin-transform-runtime": "^7.19.6",
+    "@babel/preset-env": "^7.20.2",
+    "babel-register": "^6.26.0",
+    "nodemon": "^2.0.20",
+    "sequelize-cli": "^6.6.0"
+  }
+}
