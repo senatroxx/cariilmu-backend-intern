@@ -1,4 +1,4 @@
-import { Admin } from "../../models";
+import { AdminModel } from "../../models";
 import { ErrorHandler, httpResponse } from "../../config/http";
 import bcrypt from "bcrypt";
 import { generateToken } from "../../utils/jwt";
@@ -7,7 +7,7 @@ export default {
   register: async (req, res, next) => {
     try {
       const { name, email, password } = req.body;
-      const admin = await Admin.create({
+      const admin = await AdminModel.create({
         name,
         email,
         password,
@@ -22,7 +22,7 @@ export default {
   login: async (req, res, next) => {
     try {
       const { email, password } = req.body;
-      const user = await Admin.scope("withPassword").findOne({
+      const user = await AdminModel.scope("withPassword").findOne({
         where: { email },
       });
       if (!user) throw new ErrorHandler("Invalid credentials", 401);
@@ -34,20 +34,6 @@ export default {
       const token = await generateToken(user);
 
       httpResponse(res, "success", "Admin logged in successfully", token, 200);
-    } catch (err) {
-      next(new ErrorHandler(err.message, err.status));
-    }
-  },
-
-  me: async (req, res, next) => {
-    try {
-      const user = await User.findOne({ where: { id: req.user.id } });
-
-      if (!user) {
-        return next(new ErrorHandler("User not found", 404));
-      }
-
-      httpResponse(res, "success", "User found", user);
     } catch (err) {
       next(new ErrorHandler(err.message, err.status));
     }

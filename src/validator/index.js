@@ -1,7 +1,10 @@
 import { validationResult } from "express-validator";
 import { ErrorHandler } from "../config/http";
-import UserValidator from "./module/user.validator";
 import AuthValidator from "./module/auth.validator";
+import CourseCategoryValidator from "./module/course-category.validator";
+import CourseValidator from "./module/course.validator";
+import UserValidator from "./module/user.validator";
+import UserCourseValidator from "./module/user-course.validator";
 
 function resultValidator(req, res, next) {
   const validated = validationResult(req);
@@ -11,4 +14,11 @@ function resultValidator(req, res, next) {
   return next();
 }
 
-export { resultValidator, AuthValidator };
+export {
+  resultValidator,
+  AuthValidator,
+  CourseCategoryValidator,
+  CourseValidator,
+  UserValidator,
+  UserCourseValidator,
+};

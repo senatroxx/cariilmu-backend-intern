@@ -51,7 +51,7 @@ async function JWTCheck(request) {
 
     return userToken;
   } catch (err) {
-    throw new ErrorHandler(err.messae, err.status);
+    throw new ErrorHandler(err.message, err.status);
   }
 }
 

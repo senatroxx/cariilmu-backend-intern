@@ -1,12 +1,12 @@
 import { check, validationResult } from "express-validator";
 
 import { ErrorHandler } from "../../config/http";
-import { User } from "../../models";
+import { AdminModel } from "../../models";
 
-const requestUserValidator = (req) => validationResult(req);
+const requestAdminValidator = (req) => validationResult(req);
 
 const existEmail = async (val) => {
-  const data = await User.findOne({ where: { email: val }, raw: true });
+  const data = await AdminModel.findOne({ where: { email: val }, raw: true });
 
   if (data) throw new ErrorHandler("Email is already in use", 422);
 
@@ -60,4 +60,4 @@ const login = [loginEmail, loginPassword];
 const register = [name, registerEmail, registerPassword];
 const refresh = [refreshToken];
 
-export default { requestUserValidator, login, register, refresh };
+export default { requestAdminValidator, login, register, refresh };

@@ -16,7 +16,7 @@ module.exports = {
         autoIncrement: true,
         allowNull: false,
       },
-      name: {
+      title: {
         type: Sequelize.STRING(255),
         allowNull: false,
       },

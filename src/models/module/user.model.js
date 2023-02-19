@@ -44,13 +44,6 @@ const User = db.define(
         user.password = await bcrypt.hash(user.password, salt);
       },
 
-      beforeUpdate: async (user) => {
-        if (user.changed("password")) {
-          const salt = await bcrypt.genSalt(12);
-          user.password = await bcrypt.hash(user.password, salt);
-        }
-      },
-
       afterCreate: async (user) => {
         delete user.dataValues.password;
       },
@@ -61,9 +54,5 @@ const User = db.define(
     },
   }
 );
-
-User.associations = (models) => {
-  User.belongsToMany(models.Course, { through: "user_courses" });
-};
 
 export default User;

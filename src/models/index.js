@@ -1,6 +1,28 @@
-import User from "./module/user.model";
-import Admin from "./module/admin.model";
-import Course from "./module/course.model";
-import CourseCategory from "./module/course-category.model";
+import UserModel from "./module/user.model";
+import AdminModel from "./module/admin.model";
+import CourseModel from "./module/course.model";
+import CourseCategoryModel from "./module/course-category.model";
 
-export { User, Admin, Course, CourseCategory };
+CourseModel.belongsTo(CourseCategoryModel, {
+  foreignKey: "course_category_id",
+  as: "course_category",
+});
+
+CourseCategoryModel.hasMany(CourseModel, {
+  foreignKey: "course_category_id",
+  as: "courses",
+});
+
+UserModel.belongsToMany(CourseModel, {
+  through: "user_courses",
+  as: "courses",
+  foreignKey: "user_id",
+});
+
+CourseModel.belongsToMany(UserModel, {
+  through: "user_courses",
+  as: "users",
+  foreignKey: "course_id",
+});
+
+export { UserModel, AdminModel, CourseModel, CourseCategoryModel };

@@ -1,3 +1,4 @@
+import { CourseModel } from "..";
 import { db } from "../../database";
 import { DataTypes } from "sequelize";
 
@@ -22,9 +23,5 @@ const CourseCategory = db.define(
     updatedAt: "updated_at",
   }
 );
-
-CourseCategory.associations = (models) => {
-  CourseCategory.hasMany(models.Course);
-};
 
 export default CourseCategory;

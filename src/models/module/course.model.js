@@ -1,6 +1,5 @@
 import { db } from "../../database";
 import { DataTypes } from "sequelize";
-import bcrypt from "bcrypt";
 
 const Course = db.define(
   "Course",
@@ -15,13 +14,9 @@ const Course = db.define(
       type: DataTypes.STRING(255),
       allowNull: false,
     },
-    courseCategoryId: {
+    course_category_id: {
       type: DataTypes.BIGINT(20).UNSIGNED,
       allowNull: false,
-      references: {
-        model: "course_categories",
-        key: "id",
-      },
     },
   },
   {
@@ -31,12 +26,5 @@ const Course = db.define(
     updatedAt: "updated_at",
   }
 );
-
-Course.associations = (models) => {
-  Course.belongsToMany(models.User, {
-    through: "user_courses",
-  });
-  Course.belongsTo(models.CourseCategory);
-};
 
 export default Course;

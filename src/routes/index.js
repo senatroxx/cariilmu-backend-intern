@@ -1,11 +1,11 @@
 import express from "express";
 
-import authRouter from "./module/auth";
+import adminRouter from "./module/admin";
 
 const route = express.Router();
 
 export default function router() {
-  route.use("/auth", authRouter());
+  route.use("/admin", adminRouter());
 
   return route;
 }

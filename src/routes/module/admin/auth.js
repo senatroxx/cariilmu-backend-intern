@@ -1,8 +1,8 @@
 import express from "express";
 
-import { AuthController } from "../../controllers";
-import { resultValidator, AuthValidator } from "../../validator";
-import { auth } from "../../middleware";
+import { AuthController } from "../../../controllers";
+import { resultValidator, AuthValidator } from "../../../validator";
+import { auth } from "../../../middleware";
 
 const route = express.Router();
 
@@ -20,8 +20,6 @@ const router = () => {
     resultValidator,
     AuthController.register
   );
-
-  route.get("/me", auth, AuthController.me);
 
   return route;
 };

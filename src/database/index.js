@@ -12,8 +12,8 @@ const db = new Sequelize(database, username, password, {
   logging: logger.debug.bind(logger),
 });
 
-const connectionCheck = () => {
-  return db
+const connectionCheck = async () => {
+  return await db
     .authenticate()
     .then(() => logger.info("Database Connected Successfully!"))
     .catch((err) => logger.error(err.original));
@@ -35,12 +35,26 @@ const updateOrCreate = async (model, where, payload, transaction = null) => {
   return result;
 };
 
-const paginate = (data, current_page = 1, limit = 10) => {
-  const total_records = data.length;
-  const total_page = Math.ceil(total_records / limit);
+const paginate = (
+  query,
+  { page = 1, limit = 10, order = [["created_at", "DESC"]] }
+) => {
+  limit = Number(limit);
+  page = Number(page);
+  const offset = page < 1 ? 0 : (page - 1) * limit;
 
-  let records = BaseRepository.jsonParse(data);
-  records = records.slice((current_page - 1) * limit, current_page * limit);
+  return {
+    ...query,
+    offset,
+    limit,
+    order,
+  };
+};
+
+const paginateResource = (data, current_page = 1, limit = 10) => {
+  const total_records = data.count;
+  const total_page = Math.ceil(total_records / Number(limit));
+  const records = data.rows;
 
   return {
     current_page: Number(current_page),
@@ -71,5 +85,6 @@ export {
   dbTransaction,
   updateOrCreate,
   paginate,
+  paginateResource,
   findOrFail,
 };
